@@ -26,32 +26,30 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../../../Projects/untitled/pom.xml">
+      <file leaf-file-name="Yelp.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../../../Projects/untitled/src/main/java/Yelp.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="405" max-vertical-offset="1110">
-              <caret line="30" column="21" selection-start-line="30" selection-start-column="21" selection-end-line="30" selection-end-column="21" />
-              <folding />
+            <state vertical-scroll-proportion="-12.607142" vertical-offset="2167" max-vertical-offset="3315">
+              <caret line="168" column="67" selection-start-line="168" selection-start-column="67" selection-end-line="168" selection-end-column="67" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#3123#3148#0" expanded="true" />
+                <element signature="e#4018#4024#0" expanded="true" />
+                <element signature="e#4964#5211#0" expanded="true" />
+                <element signature="e#5210#5211#0" expanded="true" />
+                <element signature="e#5376#5384#0" expanded="true" />
+                <element signature="e#5444#5452#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Yelp.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/../../../../Projects/untitled/src/main/java/Yelp.java">
+      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/../../../../Projects/untitled/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.17874396" vertical-offset="1644" max-vertical-offset="3615">
-              <caret line="117" column="24" selection-start-line="117" selection-start-column="24" selection-end-line="117" selection-end-column="24" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#3419#3444#0" expanded="true" />
-                <element signature="e#4311#4317#0" expanded="true" />
-                <element signature="e#5253#5498#0" expanded="true" />
-                <element signature="e#5497#5498#0" expanded="true" />
-                <element signature="e#5745#5770#0" expanded="true" />
-                <element signature="e#6637#6643#0" expanded="true" />
-                <element signature="e#7551#7796#0" expanded="true" />
-                <element signature="e#7795#7796#0" expanded="true" />
-              </folding>
+            <state vertical-scroll-proportion="-0.7103236" vertical-offset="461" max-vertical-offset="1110">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -60,7 +58,7 @@
         <entry file="file://$PROJECT_DIR$/../../../../Projects/untitled/src/main/java/YelpSample.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0" vertical-offset="3024" max-vertical-offset="3660">
-              <caret line="235" column="11" selection-start-line="224" selection-start-column="10" selection-end-line="235" selection-end-column="11" />
+              <caret line="185" column="2" selection-start-line="185" selection-start-column="2" selection-end-line="185" selection-end-column="2" />
               <folding />
             </state>
           </provider>
@@ -196,6 +194,7 @@
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
+    <property name="LayoutCode.rearrangeEntriesJava" value="false" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -359,6 +358,9 @@
     <list size="0" />
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="0b64996a-7af3-4654-88b0-87f5266c2eb3" name="Default" comment="" />
@@ -418,45 +420,35 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/../../../../Projects/untitled/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="255">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../../../Projects/untitled/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="405" max-vertical-offset="1110">
-          <caret line="30" column="21" selection-start-line="30" selection-start-column="21" selection-end-line="30" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../../../../Projects/untitled/src/main/java/YelpSample.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="3024" max-vertical-offset="3660">
-          <caret line="235" column="11" selection-start-line="224" selection-start-column="10" selection-end-line="235" selection-end-column="11" />
+          <caret line="185" column="2" selection-start-line="185" selection-start-column="2" selection-end-line="185" selection-end-column="2" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../../../../Projects/untitled/src/main/java/Yelp.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.17874396" vertical-offset="1644" max-vertical-offset="3615">
-          <caret line="117" column="24" selection-start-line="117" selection-start-column="24" selection-end-line="117" selection-end-column="24" />
+        <state vertical-scroll-proportion="-12.607142" vertical-offset="2167" max-vertical-offset="3315">
+          <caret line="168" column="67" selection-start-line="168" selection-start-column="67" selection-end-line="168" selection-end-column="67" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3419#3444#0" expanded="true" />
-            <element signature="e#4311#4317#0" expanded="true" />
-            <element signature="e#5253#5498#0" expanded="true" />
-            <element signature="e#5497#5498#0" expanded="true" />
-            <element signature="e#5745#5770#0" expanded="true" />
-            <element signature="e#6637#6643#0" expanded="true" />
-            <element signature="e#7551#7796#0" expanded="true" />
-            <element signature="e#7795#7796#0" expanded="true" />
+            <element signature="e#3123#3148#0" expanded="true" />
+            <element signature="e#4018#4024#0" expanded="true" />
+            <element signature="e#4964#5211#0" expanded="true" />
+            <element signature="e#5210#5211#0" expanded="true" />
+            <element signature="e#5376#5384#0" expanded="true" />
+            <element signature="e#5444#5452#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../Projects/untitled/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.7103236" vertical-offset="461" max-vertical-offset="1110">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
