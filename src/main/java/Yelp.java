@@ -37,27 +37,21 @@ public class Yelp {
 
     public static class Top10Mapper
             extends Mapper<LongWritable, Text, Text, Text> {
-        private Text rating = new Text();
-        private Text businessId = new Text(); // type of output key
 
         public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
-            String[] mydata = value.toString().split("\\^");
-            businessId.set(mydata[2]); // set word as each input keyword
-            rating.set(mydata[3]);
-            context.write(businessId, rating); // create a pair <keyword, 1>
+            String[] input = value.toString().trim().split("\\s+");
+            if(input.length==2){
+                context.write(new Text(input[0].trim()), new Text("Top10::"+value.toString()));
+            }
         }
     }
 
     public static class BusinessMapper
             extends Mapper<LongWritable, Text, Text, Text> {
-        private Text rating = new Text();
-        private Text businessId = new Text(); // type of output key
 
         public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
-            String[] mydata = value.toString().split("\\^");
-            businessId.set(mydata[2]); // set word as each input keyword
-            rating.set(mydata[3]);
-            context.write(businessId, rating); // create a pair <keyword, 1>
+            String[] input = value.toString().trim().split("\\^");
+            context.write(new Text(input[0].trim()), new Text("AllBusiness::"+input[0].trim()+" "+input[1].trim()+" "+input[2].trim()));
         }
     }
 
@@ -75,7 +69,7 @@ public class Yelp {
                 sum += Double.parseDouble(val.toString());
                 count++;
             }
-            result.set(Double.toString(sum) + "_" + Integer.toString(count));
+            result.set(Double.toString(sum) + "::" + Integer.toString(count));
             context.write(key, result);
         }
     }
@@ -91,7 +85,7 @@ public class Yelp {
             double totalSum = 0;
             int totalCount = 0;
             for (Text val : values) {
-                String[] concatenatedValue = val.toString().split("_");
+                String[] concatenatedValue = val.toString().split("::");
                 totalSum += Double.parseDouble(concatenatedValue[0]);
                 totalCount += Double.parseDouble(concatenatedValue[1]);
             }
@@ -100,12 +94,12 @@ public class Yelp {
 
             ArrayList<Text> list;
             if((list=mapToSort.get(average))!=null){
-                list.add(new Text(key.toString()+"_"+average+"_"+totalCount));
+                list.add(new Text(key.toString()+"::"+average+"::"+totalCount));
                 mapToSort.put(average, list);
             }
             else{
                 ArrayList<Text> newList=new ArrayList<Text>();
-                newList.add(new Text(key.toString()+"_"+average+"_"+totalCount));
+                newList.add(new Text(key.toString()+"::"+average+"::"+totalCount));
                 mapToSort.put(average, newList);
             }
         }
@@ -122,7 +116,7 @@ public class Yelp {
                     if(count>=10){
                         break;
                     }
-                    context.write(t.toString().split("_")[0], new Text(t.toString().split("_")[1]));
+                    context.write(t.toString().split("::")[0], new Text(t.toString().split("::")[1]));
                     count++;
                 }
             }
@@ -131,7 +125,7 @@ public class Yelp {
         void sortRecordsByValue(ArrayList<Text> recordsList){
             Collections.sort(recordsList,new Comparator<Text>() {
                 public int compare(Text text1, Text text2) {
-                    return Integer.parseInt(text2.toString().split("_")[2]) - Integer.parseInt(text1.toString().split("_")[2]);
+                    return Integer.parseInt(text2.toString().split("::")[2]) - Integer.parseInt(text1.toString().split("::")[2]);
                 }
             });
         }
@@ -139,67 +133,51 @@ public class Yelp {
     }
 
     public static class JoinReducer
-            extends Reducer<Text, Text, Text, DoubleWritable> {
-        private DoubleWritable result = new DoubleWritable();
-        TreeMap<Double, ArrayList<Text>> mapToSort = new TreeMap<Double, ArrayList<Text>>();
+            extends Reducer<Text, Text, Text, Text> {
 
+        ArrayList<String> topBusiness = new ArrayList<String>();
+        ArrayList<String> businessDetail = new ArrayList<String>();
 
-        @Override
-        public void reduce(Text key, Iterable<Text> values, Context context) throws IOException, InterruptedException {
-            double totalSum = 0;
-            int totalCount = 0;
-            for (Text val : values) {
-                String[] concatenatedValue = val.toString().split("_");
-                totalSum += Double.parseDouble(concatenatedValue[0]);
-                totalCount += Double.parseDouble(concatenatedValue[1]);
-            }
-            double average = totalSum / (double) totalCount;
-            result.set(average);
-
-            ArrayList<Text> list;
-            if((list=mapToSort.get(average))!=null){
-                list.add(new Text(key.toString()+"_"+average+"_"+totalCount));
-                mapToSort.put(average, list);
-            }
-            else{
-                ArrayList<Text> newList=new ArrayList<Text>();
-                newList.add(new Text(key.toString()+"_"+average+"_"+totalCount));
-                mapToSort.put(average, newList);
-            }
-        }
-
-        protected void cleanup(Reducer.Context context) throws IOException, InterruptedException {
-            // TODO Auto-generated method stub
-            int i=0;
-            for(ArrayList<Text> listt:mapToSort.descendingMap().values()){
-                sortRecordsByValue(listt);
-                if(i>=10){
-                    break;
+        protected void reduce(Text key, Iterable<Text> values,
+                              Reducer<Text, Text, Text, Text>.Context context)
+                throws IOException, InterruptedException {
+            topBusiness.clear();
+            businessDetail.clear();
+            for(Text value : values){
+                String[] input=value.toString().split("::");
+                if(input[0].equals("Top10")){
+                    topBusiness.add(input[1]);
                 }
-                for(Text t:listt){
-                    if(i>=10){
-                        break;
+                else if(input[0].equals("AllBusiness")){
+                    if(businessDetail.isEmpty()) {
+                        businessDetail.add(input[1]);
                     }
-                    context.write(t.toString().split("_")[0], new Text(t.toString().split("_")[1]));
-                    i++;
+                }
+            }
+            executeJoinLogic(context);
+        }
+
+        void executeJoinLogic(Reducer<Text, Text, Text, Text>.Context context) throws IOException, InterruptedException{
+
+            for(String business : topBusiness){
+                if(!businessDetail.isEmpty()){
+                    for(String detail : businessDetail){
+                        context.write(new Text(business.split("\\s+")[1]),new Text(detail));
+                    }
+                }
+                else{
+                    context.write(new Text(business.split("\\s+")[1]), new Text("unknown"));
                 }
             }
         }
 
-        void sortRecordsByValue(ArrayList<Text> recordsList){
-            Collections.sort(recordsList,new Comparator<Text>() {
-                public int compare(Text text1, Text text2) {
-                    return Integer.parseInt(text2.toString().split("_")[2]) - Integer.parseInt(text1.toString().split("_")[2]);
-                }
-            });
-        }
 
     }
     public static void main(String[] args) throws Exception {
         Configuration conf = new Configuration();
         String[] otherArgs = new GenericOptionsParser(conf, args).getRemainingArgs();
-        if (otherArgs.length != 4) {
-            System.err.println("Usage: WordCount <business> <review> <user> <output>");
+        if (otherArgs.length != 5) {
+            System.err.println("Usage: WordCount <business> <review> <user> <temp> <output>");
             System.exit(2);
         }
 
@@ -226,9 +204,11 @@ public class Yelp {
             job2.setReducerClass(JoinReducer.class);
             job2.setOutputKeyClass(Text.class);
             job2.setOutputValueClass(Text.class);
-            MultipleInputs.addInputPath(job2, new Path(otherArgs[2]), TextInputFormat.class, Top10Mapper.class);
+            job2.setMapOutputKeyClass(Text.class);
+            job2.setMapOutputValueClass(Text.class);
+            MultipleInputs.addInputPath(job2, new Path(otherArgs[3]), TextInputFormat.class, Top10Mapper.class);
             MultipleInputs.addInputPath(job2, new Path(otherArgs[0]), TextInputFormat.class, BusinessMapper.class);
-            FileOutputFormat.setOutputPath(job2, new Path(otherArgs[3]));
+            FileOutputFormat.setOutputPath(job2, new Path(otherArgs[4]));
             System.exit(job2.waitForCompletion(true)? 0 : 1);
         }
     }
