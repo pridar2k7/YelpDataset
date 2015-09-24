@@ -112,18 +112,18 @@ public class Yelp {
 
         protected void cleanup(Reducer.Context context) throws IOException, InterruptedException {
             // TODO Auto-generated method stub
-            int i=0;
-            for(ArrayList<Text> listt:mapToSort.descendingMap().values()){
-                sortRecordsByValue(listt);
-                if(i>=10){
+            int count=0;
+            for(ArrayList<Text> mapValues:mapToSort.descendingMap().values()){
+                sortRecordsByValue(mapValues);
+                if(count>=10){
                     break;
                 }
-                for(Text t:listt){
-                    if(i>=10){
+                for(Text t:mapValues){
+                    if(count>=10){
                         break;
                     }
                     context.write(t.toString().split("_")[0], new Text(t.toString().split("_")[1]));
-                    i++;
+                    count++;
                 }
             }
         }
